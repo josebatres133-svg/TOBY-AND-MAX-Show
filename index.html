@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ðŸŽ¬ The Angry Guy & The Crazy Cousin â€” Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Bangers&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --yellow: #FFE100;
+  --black: #111111;
+  --red: #FF2D2D;
+  --blue: #1A6FFF;
+  --green: #22c55e;
+  --white: #FFFDF0;
+  --bg: #FFFDF0;
+  --orange: #FF8C00;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  font-family: 'Comic Neue', cursive;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, #ddd 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* HEADER */
+header { text-align: center; padding: 28px 0 16px; }
+.title-badge {
+  display: inline-block;
+  background: var(--yellow);
+  border: 4px solid var(--black);
+  box-shadow: 6px 6px 0 var(--black);
+  padding: 8px 28px;
+  transform: rotate(-2deg);
+  margin-bottom: 10px;
+}
+h1 {
+  font-family: 'Bangers', cursive;
+  font-size: clamp(2rem, 7vw, 3.8rem);
+  color: var(--black);
+  letter-spacing: 3px;
+  text-shadow: 3px 3px 0 var(--red);
+  line-height: 1.1;
+}
+.subtitle {
+  font-family: 'Bangers', cursive;
+  font-size: 1rem;
+  color: var(--blue);
+  letter-spacing: 2px;
+  margin-top: 6px;
+}
+
+/* PANEL */
+.panel {
+  background: white;
+  border: 3px solid var(--black);
+  box-shadow: 5px 5px 0 var(--black);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.panel-title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.35rem;
+  letter-spacing: 2px;
+  color: var(--black);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.panel-title .icon {
+  background: var(--black);
+  color: var(--yellow);
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* INPUTS */
+input[type="password"], input[type="text"], textarea, select {
+  font-family: 'Comic Neue', cursive;
+  font-size: 0.92rem;
+  border: 2.5px solid var(--black);
+  border-radius: 4px;
+  padding: 8px 12px;
+  outline: none;
+  transition: box-shadow 0.15s;
+  background: var(--white);
+  width: 100%;
+}
+input:focus, textarea:focus, select:focus { box-shadow: 3px 3px 0 var(--blue); }
+textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+
+/* CHARACTERS */
+.chars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 14px;
+}
+.char-card {
+  border: 2.5px solid var(--black);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--white);
+  transition: opacity 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.char-card.inactive { opacity: 0.45; background: #f0f0f0; }
+.char-header {
+  background: var(--black);
+  color: var(--yellow);
+  font-family: 'Bangers', cursive;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  padding: 6px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.char-active {
+  width: 16px !important; height: 16px !important;
+  cursor: pointer;
+  accent-color: var(--red);
+  flex-shrink: 0;
+}
+.char-header input[type="text"] {
+  background: transparent; border: none;
+  color: var(--yellow);
+  font-family: 'Bangers', cursive;
+  font-size: 0.95rem; letter-spacing: 1px;
+  box-shadow: none; padding: 0; width: 100%;
+}
+.char-header input[type="text"]:focus { box-shadow: none; }
+.char-header input[type="text"]::placeholder { color: #aaa; }
+.char-card textarea {
+  border: none; border-radius: 0;
+  min-height: 200px; font-size: 0.82rem;
+  flex-grow: 1; white-space: pre-wrap;
+}
+.char-card textarea:focus { box-shadow: none; }
+.del-char-btn {
+  background: none; border: none;
+  color: #ff6b6b; cursor: pointer;
+  font-size: 1rem; margin-left: auto;
+  flex-shrink: 0;
+}
+.del-char-btn:hover { color: var(--red); }
+
+.add-char-btn {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  background: var(--white);
+  border: 2.5px dashed var(--black);
+  border-radius: 4px; padding: 16px;
+  cursor: pointer;
+  font-family: 'Bangers', cursive; font-size: 1rem; letter-spacing: 1px;
+  color: #777; transition: all 0.15s; width: 100%; margin-top: 12px;
+}
+.add-char-btn:hover { background: #f5f5f5; color: var(--black); }
+
+/* WORLD SELECTOR */
+.world-pills {
+  display: flex; flex-wrap: wrap; gap: 7px; margin-top: 6px;
+}
+.world-pill {
+  padding: 5px 13px;
+  border: 2.5px solid var(--black);
+  border-radius: 20px;
+  background: var(--white);
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700; font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  box-shadow: 2px 2px 0 var(--black);
+}
+.world-pill:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--black); }
+.world-pill.active { background: var(--black); color: var(--yellow); }
+
+/* OPTIONS */
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 13px;
+}
+@media(max-width:580px){ .options-grid { grid-template-columns: 1fr; } }
+.option-group label {
+  display: block; font-weight: 700;
+  font-size: 0.82rem; margin-bottom: 5px;
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+
+/* REVENGE BADGE */
+.revenge-badge-label {
+  display: inline-block;
+  background: var(--orange);
+  color: white;
+  font-family: 'Bangers', cursive;
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  padding: 1px 7px;
+  border-radius: 10px;
+  margin-left: 6px;
+  vertical-align: middle;
+  border: 1.5px solid var(--black);
+}
+
+/* REVENGE SUB-PANEL */
+.revenge-panel {
+  display: none;
+  background: #fff8f0;
+  border: 2.5px solid var(--orange);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  box-shadow: 3px 3px 0 var(--orange);
+}
+.revenge-panel.show { display: block; }
+.revenge-panel-title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.05rem;
+  color: var(--orange);
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+}
+
+.revenge-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 11px;
+}
+@media(max-width:520px){ .revenge-grid { grid-template-columns: 1fr; } }
+
+.revenge-pill-group {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+}
+.revenge-pill {
+  padding: 4px 11px;
+  border: 2px solid var(--orange);
+  border-radius: 16px;
+  background: var(--white);
+  font-family: 'Comic Neue', cursive;
+  font-weight: 700; font-size: 0.78rem;
+  cursor: pointer;
+  transition: all 0.13s;
+  box-shadow: 2px 2px 0 rgba(255,140,0,0.3);
+}
+.revenge-pill:hover { transform: translate(-1px,-1px); }
+.revenge-pill.active { background: var(--orange); color: white; box-shadow: 2px 2px 0 var(--black); }
+
+/* SORA TOGGLE */
+.sora-toggle-row {
+  display: flex; align-items: center; gap: 10px; margin-top: 14px;
+}
+.sora-toggle-row input[type="checkbox"] {
+  width: 18px; height: 18px; cursor: pointer;
+  accent-color: var(--green);
+}
+.sora-toggle-row label {
+  font-weight: 700; font-size: 0.88rem; cursor: pointer;
+}
+
+/* GENERATE BTN */
+.generate-btn {
+  display: block; width: 100%; padding: 16px;
+  background: var(--red); color: white;
+  font-family: 'Bangers', cursive;
+  font-size: 1.8rem; letter-spacing: 3px;
+  border: 3px solid var(--black);
+  box-shadow: 5px 5px 0 var(--black);
+  border-radius: 4px; cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  text-transform: uppercase; margin-bottom: 18px;
+}
+.generate-btn:hover  { transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--black); }
+.generate-btn:active { transform: translate(3px,3px);  box-shadow: 2px 2px 0 var(--black); }
+.generate-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+
+/* LOADING */
+.loading { display: none; text-align: center; padding: 28px; }
+.loading.show { display: block; }
+.boom {
+  font-family: 'Bangers', cursive; font-size: 2.8rem;
+  color: var(--red); letter-spacing: 4px;
+  animation: pulse 0.6s ease-in-out infinite alternate;
+  display: inline-block;
+}
+@keyframes pulse {
+  from { transform: scale(1) rotate(-3deg); }
+  to   { transform: scale(1.15) rotate(3deg); }
+}
+
+/* ERROR */
+.error-box {
+  background: #fff0f0; border: 2px solid var(--red);
+  border-radius: 4px; padding: 12px 16px;
+  color: var(--red); font-weight: 700;
+  display: none; margin-bottom: 16px; word-break: break-word;
+}
+.error-box.show { display: block; }
+
+/* OUTPUT */
+.episode-output { display: none; }
+.episode-output.show { display: block; }
+
+.episode-header {
+  background: var(--black); color: var(--yellow);
+  padding: 14px 20px;
+  display: flex; align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; gap: 10px;
+}
+.ep-title-area h2 {
+  font-family: 'Bangers', cursive;
+  font-size: 1.5rem; letter-spacing: 2px;
+}
+.ep-title-area .ep-num { font-size: 0.82rem; color: #aaa; letter-spacing: 1px; }
+.ep-title-area .ep-world { font-size: 0.78rem; color: #ccc; margin-top: 2px; }
+
+.ep-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.action-btn {
+  padding: 6px 13px;
+  border: 2px solid var(--yellow);
+  border-radius: 3px; background: transparent;
+  color: var(--yellow);
+  font-family: 'Bangers', cursive; font-size: 0.92rem; letter-spacing: 1px;
+  cursor: pointer; transition: all 0.15s;
+}
+.action-btn:hover { background: var(--yellow); color: var(--black); }
+
+.episode-body {
+  padding: 20px; background: white;
+  border: 3px solid var(--black);
+  border-top: none;
+  box-shadow: 5px 5px 0 var(--black);
+}
+
+.episode-text { white-space: pre-wrap; line-height: 1.7; font-size: 0.95rem; }
+
+.scene-header {
+  font-family: 'Bangers', cursive;
+  font-size: 1.15rem; color: var(--blue); letter-spacing: 1px;
+  margin: 16px 0 6px; padding: 4px 10px;
+  border-left: 4px solid var(--blue);
+  background: #f0f5ff; display: block;
+}
+
+/* Sora box */
+.sora-result-box {
+  background: #f0fdf4;
+  border: 2px solid var(--green);
+  border-radius: 6px; padding: 14px; margin-bottom: 18px;
+}
+.sora-result-box h3 {
+  font-family: 'Bangers', cursive;
+  color: #166534; letter-spacing: 1px; margin-bottom: 6px; font-size: 1.2rem;
+}
+.prompt-text {
+  background: #111; color: #00FF88;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem;
+  padding: 12px; border-radius: 4px;
+  white-space: pre-wrap; line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+/* Meta box */
+.meta-box {
+  background: #fdfaf2; border: 2px dashed #d4c79e;
+  padding: 13px; border-radius: 6px; margin-bottom: 16px;
+  font-size: 0.9rem; line-height: 1.6;
+}
+.meta-box strong {
+  font-family: 'Bangers', cursive;
+  color: var(--black); letter-spacing: 1px; font-size: 1rem;
+}
+
+.copy-btn {
+  background: var(--yellow); color: var(--black);
+  border: 2px solid var(--black);
+  font-family: 'Bangers', cursive; font-size: 0.9rem; letter-spacing: 1px;
+  padding: 5px 13px; cursor: pointer; border-radius: 3px;
+  transition: transform 0.1s; display: inline-block; margin-top: 4px;
+}
+.copy-btn:hover { transform: scale(1.04); }
+.copy-btn.green { background: var(--green); color: white; border-color: #166534; }
+
+/* divider */
+hr.panel-divider {
+  border: none; border-top: 2px dashed #ddd; margin: 16px 0;
+}
+
+/* Image prompt box */
+.img-prompt-box {
+  background: #fffbeb;
+  border: 2px solid #f59e0b;
+  border-radius: 6px; padding: 14px; margin-bottom: 18px;
+}
+.img-prompt-box h3 {
+  font-family: 'Bangers', cursive;
+  color: #92400e; letter-spacing: 1px; margin-bottom: 6px; font-size: 1.2rem;
+}
+.img-prompt-box p {
+  font-size: 0.8rem; color: #78350f; margin-bottom: 8px;
+}
+.img-prompt-text {
+  background: #fff;
+  border: 1.5px solid #fcd34d;
+  font-family: 'Courier New', monospace;
+  font-size: 0.8rem;
+  padding: 10px 12px; border-radius: 4px;
+  white-space: pre-wrap; line-height: 1.55;
+  margin-bottom: 10px; color: #111;
+}
+.copy-btn.orange { background: #f59e0b; color: white; border-color: #92400e; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <header>
+    <div class="title-badge">
+      <div class="subtitle">âœï¸ ESTUDIO DE ANIMACIÃ“N âœï¸</div>
+    </div>
+    <h1>THE ANGRY GUY &<br>THE CRAZY COUSIN</h1>
+    <div class="subtitle" style="margin-top:6px; color:#555; font-family:'Comic Neue',cursive; font-size:0.95rem;">
+      Generador de Episodios Â· Mundos Paralelos Â· Prompts Sora Anti-Clones
+    </div>
+  </header>
+
+  <!-- API KEY (DejÃ© el input tal cual el de tu cÃ³digo funcional) -->
+  <div class="panel">
+    <div class="panel-title"><div class="icon">ðŸ”‘</div> API KEY DE GEMINI</div>
+    <input type="password" id="apiKey" placeholder="Pega aquÃ­ tu API Key de Gemini Studio (AIzaSy...)" />
+  </div>
+
+  <!-- CHARACTERS -->
+  <div class="panel">
+    <div class="panel-title" style="flex-direction:column; align-items:flex-start; gap:4px;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <div class="icon">ðŸ‘¥</div> ELENCO DE PERSONAJES
+      </div>
+      <p style="font-size:0.85rem; font-weight:400; color:#666; letter-spacing:0;">
+        Activa âœ… o desactiva quiÃ©n aparece en el episodio.
+      </p>
+    </div>
+
+    <div class="chars-grid" id="charsGrid">
+
+      <!-- MAX -->
+      <div class="char-card" data-id="1">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ˜¡</span>
+          <input type="text" class="char-name" value="Max â€” The Angry Guy" />
+        </div>
+        <textarea class="char-prompt">Grumpy cartoon boy with short spiky dark hair, thick eyebrows, sharp green eyes, tan skin.
+Red t-shirt, dark blue pants, brown shoes.
+Personality: easily frustrated, explosive reactions, always falls for Toby's pranks.
+Catchphrase when he explodes: "TOOOOOOBY!!"</textarea>
+      </div>
+
+      <!-- TOBY -->
+      <div class="char-card" data-id="2">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ¤ª</span>
+          <input type="text" class="char-name" value="Toby â€” The Crazy Cousin" />
+        </div>
+        <textarea class="char-prompt">Silly cartoon boy with messy dark hair, big round eyes, tan skin.
+Tongue sticking out in a goofy way.
+Yellow t-shirt, dark blue pants, brown shoes.
+Personality: mischievous prankster, always acts innocent, laughs "Hee hee!" after every prank.</textarea>
+      </div>
+
+      <!-- REX -->
+      <div class="char-card" data-id="3">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ’ª</span>
+          <input type="text" class="char-name" value="Rex â€” The Perfect Strong Guy" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Very muscular cartoon boy with exaggerated cartoon muscles.
+Short spiky brown hair. Big round cartoon eyes and confident smile. Tan skin.
+Tight green t-shirt showing muscles, dark blue pants, brown shoes.
+Personality: calm, confident, everything comes easy for him. Never breaks a sweat.</textarea>
+      </div>
+
+      <!-- LILY -->
+      <div class="char-card" data-id="4">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ‘§</span>
+          <input type="text" class="char-name" value="Lily â€” The Mischievous Girl" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Playful cartoon girl with two messy pigtails, dark hair, big round eyes, tan skin.
+Wearing a pink shirt, blue pants, and brown shoes.
+She has a sneaky mischievous smile.
+Personality: sneaky, clever, teams up with Toby to prank Max.</textarea>
+      </div>
+
+      <!-- GUS -->
+      <div class="char-card" data-id="5">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ˜´</span>
+          <input type="text" class="char-name" value="Gus â€” The Lazy Hungry Sleeper" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Very chubby cartoon boy with messy dark hair, big round sleepy eyes, tan skin.
+Blue t-shirt tight around big belly, dark pants, brown shoes.
+Eyelids half closed, mouth slightly open with drool. Small "Zzz" floating above head.
+Personality: always hungry, very lazy, extremely sleepy. Falls asleep mid-sentence.</textarea>
+      </div>
+
+      <!-- LUCAS -->
+      <div class="char-card" data-id="6">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ¤•</span>
+          <input type="text" class="char-name" value="Lucas â€” The Clumsy Optimist" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Cheerful cartoon boy with messy dark hair, big round green eyes, tan skin.
+Small bandage on cheek, always looks happy.
+Green t-shirt, blue shorts, red sneakers, knee pads, elbow pads, red helmet with yellow lightning bolt.
+Personality: clumsy, always falling, but never worries. Always says "I'm fine!" and gets back up smiling.</textarea>
+      </div>
+
+      <!-- NICO -->
+      <div class="char-card" data-id="7">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ¤“</span>
+          <input type="text" class="char-name" value="Nico â€” The Smart Nerd" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Nerdy cartoon boy with messy brown hair, big round glasses, large curious eyes, tan skin.
+White shirt with red bow tie, brown shorts, red sneakers. Pocket protector with colorful pens.
+Holds a pencil and a blue book.
+Personality: very intelligent, always has a plan, loves explaining things with science and logic.</textarea>
+      </div>
+
+      <!-- BABY TOTO -->
+      <div class="char-card" data-id="8">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ‘¶</span>
+          <input type="text" class="char-name" value="Baby Toto â€” The Funny Baby" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Chubby cartoon baby with tan skin, big round eyes, small curl of brown hair on top.
+Wearing only a white diaper. Holds a colorful rattle and a baby bottle.
+Personality: funny and mischievous, always laughing, making silly noises and causing chaos without realizing it.
+Sits happily on the floor, smiling, winking, tongue out playfully.</textarea>
+      </div>
+
+      <!-- DR. GRUMBLE -->
+      <div class="char-card" data-id="9">
+        <div class="char-header">
+          <input type="checkbox" class="char-active" checked>
+          <span>ðŸ§«</span>
+          <input type="text" class="char-name" value="Dr. Grumble â€” The Funny Villain" />
+          <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+        </div>
+        <textarea class="char-prompt">Mischievous cartoon boy villain with messy spiky black hair and a white streak in front.
+Big green eyes, thick angry eyebrows, evil smile. Tan skin.
+White scientist lab coat, purple shirt, black gloves, black shorts, black boots with green details.
+Holds a small green bubbling science flask.
+Personality: thinks he's a genius villain, makes crazy inventions, but his plans always fail in funny ways.</textarea>
+      </div>
+
+    </div>
+
+    <button class="add-char-btn" id="addCharBtn">âž• Agregar nuevo personaje al elenco</button>
+  </div>
+
+  <!-- OPTIONS -->
+  <div class="panel">
+    <div class="panel-title"><div class="icon">âš™ï¸</div> CONFIGURAR EPISODIO</div>
+
+    <!-- World selector -->
+    <div style="margin-bottom:16px;">
+      <div class="option-group"><label>ðŸŒ Mundo / Universo Paralelo</label></div>
+      <div class="world-pills" id="worldPills">
+        <button class="world-pill active" data-world="everyday life at home">ðŸ  Cotidiano</button>
+        <button class="world-pill" data-world="outer space">ðŸš€ Espacio</button>
+        <button class="world-pill" data-world="medieval kingdom">âš”ï¸ Medieval</button>
+        <button class="world-pill" data-world="underwater ocean">ðŸŒŠ Fondo del Mar</button>
+        <button class="world-pill" data-world="wild jungle">ðŸ¦ Jungla</button>
+        <button class="world-pill" data-world="inside a video game">ðŸŽ® Videojuego</button>
+        <button class="world-pill" data-world="prehistoric dinosaur era">ðŸ¦• PrehistÃ³rico</button>
+        <button class="world-pill" data-world="restaurant kitchen">ðŸ‘¨â€ðŸ³ Restaurante</button>
+        <button class="world-pill" data-world="wild west">ðŸ¤  Oeste</button>
+        <button class="world-pill" data-world="school">ðŸ« Escuela</button>
+        <button class="world-pill" data-world="superhero city">ðŸ¦¸ SuperhÃ©roes</button>
+        <button class="world-pill" data-world="haunted house">ðŸ‘» Casa Fantasma</button>
+        <button class="world-pill" data-world="custom" id="customWorldPill">âœï¸ Otro...</button>
+      </div>
+      <input type="text" id="customWorldInput" placeholder="Escribe tu propio mundo..." style="margin-top:8px; display:none;" />
+    </div>
+
+    <hr class="panel-divider">
+
+    <div class="options-grid">
+      <div class="option-group">
+        <label>Tipo de broma</label>
+        <select id="jokeType">
+          <option value="classic Toby prank on Max">ðŸª¤ Trampa ClÃ¡sica de Toby</option>
+          <option value="epic misunderstanding between characters">ðŸ˜µ Malentendido Ã‰pico</option>
+          <option value="chain reaction accident">ðŸ’¥ Accidente en Cadena</option>
+          <option value="a plan that goes hilariously wrong">ðŸ“‹ Plan que Sale Mal</option>
+          <option value="Toby acts totally innocent after causing chaos">ðŸ˜‡ Toby Inocente Fingido</option>
+          <option value="Max explodes over something tiny">ðŸŒ‹ Max Explota por Nada</option>
+          <option value="everyone gets into trouble together">ðŸ¤ Todos en Problemas</option>
+          <option value="Dr. Grumble's invention backfires">ðŸ§« Invento de Dr. Grumble que falla</option>
+          <option value="Gus falls asleep at the worst moment">ðŸ˜´ Gus se duerme en el peor momento</option>
+          <option value="Lucas causes accidental chaos while being positive">ðŸ¤• Lucas destruye todo sin querer</option>
+          <!-- â˜… NEW REVENGE OPTIONS -->
+          <option value="MAX_REVENGE_TOBY_IMMUNE" id="revengeOption">ðŸ˜¤ Max le tiende trampas a Toby (Â¡Toby nunca cae!)</option>
+        </select>
+      </div>
+
+      <div class="option-group">
+        <label>DuraciÃ³n</label>
+        <select id="lengthSelect">
+          <option value="micro-short of exactly 10 seconds â€” 1 scene max, 3 lines of dialogue, instant punchline">âš¡ Micro-corto (10 seg)</option>
+          <option value="short of 30-60 seconds â€” 2-3 scenes, fast paced" selected>ðŸ“± Corto (30-60 seg)</option>
+          <option value="full episode of 2-3 minutes â€” 4-6 scenes with buildup and twist ending">ðŸŽ¬ Episodio Completo (2-3 min)</option>
+        </select>
+      </div>
+
+      <div class="option-group">
+        <label>Tono</label>
+        <select id="toneSelect">
+          <option value="slapstick physical comedy">ðŸ¤£ Slapstick FÃ­sico</option>
+          <option value="absurd surreal humor">ðŸŒ€ Absurdo / Surreal</option>
+          <option value="soft funny and cute">ðŸ˜Š Tierno y Chistoso</option>
+          <option value="total chaos non-stop">ðŸ’€ Caos Total</option>
+        </select>
+      </div>
+
+      <div class="option-group">
+        <label>Idioma</label>
+        <select id="langSelect">
+          <option value="English (American)" selected>ðŸ‡ºðŸ‡¸ English</option>
+          <option value="Spanish (Latin American)">ðŸ‡²ðŸ‡½ EspaÃ±ol Latino</option>
+          <option value="funny Spanglish mix">ðŸŒ® Spanglish</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- â˜… REVENGE SUB-PANEL â€” aparece solo cuando se elige esa opciÃ³n -->
+    <div class="revenge-panel" id="revengePanel">
+      <div class="revenge-panel-title">ðŸ˜¤ MODO: MAX VS TOBY â€” TRAMPAS SIN EFECTO</div>
+      <p style="font-size:0.83rem; color:#7c4700; margin-bottom:10px; line-height:1.5;">
+        Max planea una trampa perfecta contra Toby. Toby nunca cae por razones absurdas o accidentales.
+        Max queda humillado. Personaliza los detalles aquÃ­:
+      </p>
+
+      <div class="revenge-grid">
+        <div>
+          <div class="option-group" style="margin-bottom:8px;">
+            <label style="color:#7c4700;">ðŸª¤ Tipo de trampa que Max tiende</label>
+          </div>
+          <div class="revenge-pill-group" id="trapTypePills">
+            <button class="revenge-pill active" data-trap="a bucket of water balanced on a door">ðŸª£ Cubo de agua en la puerta</button>
+            <button class="revenge-pill" data-trap="a banana peel on the floor">ðŸŒ CÃ¡scara de banana</button>
+            <button class="revenge-pill" data-trap="a fake spider in a box">ðŸ•·ï¸ AraÃ±a falsa en caja</button>
+            <button class="revenge-pill" data-trap="a glue trap on the chair">ðŸª‘ Silla con pegamento</button>
+            <button class="revenge-pill" data-trap="a tripwire made of string">ðŸ§µ Trampa de hilo invisible</button>
+            <button class="revenge-pill" data-trap="a fake hole in the ground">ðŸ•³ï¸ Hoyo falso pintado</button>
+            <button class="revenge-pill" data-trap="a giant net from the ceiling">ðŸ•¸ï¸ Red gigante del techo</button>
+            <button class="revenge-pill" data-trap="a fake cake with a spring inside">ðŸŽ‚ Pastel con resorte</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="option-group" style="margin-bottom:8px;">
+            <label style="color:#7c4700;">ðŸ¤¡ Â¿Por quÃ© Toby NUNCA cae?</label>
+          </div>
+          <div class="revenge-pill-group" id="escapeReasonPills">
+            <button class="revenge-pill active" data-escape="by pure accidental luck â€” he does something random that completely avoids the trap without knowing it existed">ðŸ€ Pura suerte absurda</button>
+            <button class="revenge-pill" data-escape="because he is completely distracted by something silly and never even gets close to the trap">ðŸ˜µ Completamente distraÃ­do</button>
+            <button class="revenge-pill" data-escape="because another character accidentally triggers Max's own trap on Max himself">ðŸ”„ Alguien activa la trampa en Max</button>
+            <button class="revenge-pill" data-escape="because Toby innocently dismantles the trap thinking it's a toy or snack">ðŸ§½ Lo desmonta sin saberlo</button>
+            <button class="revenge-pill" data-escape="because a random animal or Baby Toto interferes and ruins the trap before Toby arrives">ðŸ¾ Interferencia aleatoria</button>
+            <button class="revenge-pill" data-escape="because Toby sleepwalks right through the trap without waking up">ðŸ’¤ Lo atraviesa dormido</button>
+          </div>
+        </div>
+      </div>
+
+      <hr style="border:none; border-top:1.5px dashed #ffc875; margin:12px 0;">
+
+      <div class="option-group">
+        <label style="color:#7c4700;">ðŸ˜ˆ Â¿CÃ³mo intenta vengarse Max al final?</label>
+        <div class="revenge-pill-group" id="revengePlanPills" style="margin-top:5px;">
+          <button class="revenge-pill active" data-revenge="Max screams 'THIS ISN'T OVER!' and starts planning an even bigger trap while steam comes out of his ears">ðŸ’¢ "Â¡Esto no terminÃ³!" (planea trampa mÃ¡s grande)</button>
+          <button class="revenge-pill" data-revenge="Max asks Nico to help him build a scientific revenge device, but Nico's invention also backfires on Max">ðŸ”¬ Pide ayuda a Nico (sale peor)</button>
+          <button class="revenge-pill" data-revenge="Max teams up with Dr. Grumble for a super-villain revenge plan that hilariously fails">ðŸ§« Se alia con Dr. Grumble (fracaso Ã©pico)</button>
+          <button class="revenge-pill" data-revenge="Max tries an even simpler revenge but Toby accidentally avoids it again without knowing">ðŸ” Intento mÃ¡s simple, mismo resultado</button>
+          <button class="revenge-pill" data-revenge="Max gives up and cries dramatically while Toby laughs not knowing why Max is upset">ðŸ˜­ Max se rinde dramÃ¡ticamente</button>
+          <button class="revenge-pill" data-revenge="Max accidentally gets caught in his own revenge trap before he can even use it on Toby">ðŸª¤ Cae en su propia trampa de venganza</button>
+        </div>
+      </div>
+    </div>
+    <!-- END REVENGE SUB-PANEL -->
+
+    <div class="option-group" style="margin-top:14px;">
+      <label>ðŸ’¡ Idea del corto (opcional)</label>
+      <textarea id="ideaInput" style="min-height:65px;" placeholder="Ej: Max estÃ¡ meditando para no enojarse, Toby llega con la araÃ±a de hule... o dÃ©jalo vacÃ­o para sorpresa total ðŸŽ²"></textarea>
+    </div>
+
+    <!-- Sora toggle -->
+    <div class="sora-toggle-row">
+      <input type="checkbox" id="soraToggle" />
+      <label for="soraToggle">ðŸŽ¬ Generar tambiÃ©n Prompt Anti-Clones para Sora / Runway / Kling</label>
+    </div>
+
+  </div>
+
+  <!-- ERROR -->
+  <div class="error-box" id="errorBox"></div>
+
+  <!-- GENERATE -->
+  <button class="generate-btn" id="generateBtn">ðŸŽ¬ Â¡GENERAR EPISODIO!</button>
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="boom">âš¡ GENERANDO... âš¡</div>
+    <p id="loadingText" style="margin-top:10px; font-size:0.92rem; color:#666;">Preparando el caos...</p>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="episode-output panel" id="episodeOutput" style="padding:0; margin-top:4px;">
+    <div class="episode-header">
+      <div class="ep-title-area">
+        <div class="ep-num" id="epNum">CHAPTER #1</div>
+        <h2 id="epTitle">â€”</h2>
+        <div class="ep-world" id="epWorld"></div>
+      </div>
+      <div class="ep-actions">
+        <button class="action-btn" id="copyBtn">ðŸ“‹ COPY</button>
+        <button class="action-btn" id="variateBtn">ðŸ”„ VARIAR</button>
+      </div>
+    </div>
+    <div class="episode-body" id="epBody"></div>
+  </div>
+
+</div>
+
+<script>
+let episodeCount = 0;
+let charIdCounter = 10;
+let selectedWorld = 'everyday life at home';
+let lastEpisodeText = '';
+
+// Revenge mode state
+let selectedTrap = 'a bucket of water balanced on a door';
+let selectedEscapeReason = 'by pure accidental luck â€” he does something random that completely avoids the trap without knowing it existed';
+let selectedRevengePlan = "Max screams 'THIS ISN'T OVER!' and starts planning an even bigger trap while steam comes out of his ears";
+
+// â”€â”€ Fallback Copy to Clipboard â”€â”€
+function copyToClipboard(text, btnElement, successText, originalText) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.top = "0"; textArea.style.left = "0"; textArea.style.position = "fixed";
+  document.body.appendChild(textArea);
+  textArea.focus(); textArea.select();
+  try {
+    document.execCommand('copy');
+    btnElement.textContent = successText;
+    setTimeout(() => btnElement.textContent = originalText, 2000);
+  } catch (err) { console.error('Copy failed', err); }
+  document.body.removeChild(textArea);
+}
+
+// â”€â”€ World pills â”€â”€
+document.querySelectorAll('.world-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.world === 'custom') {
+      document.getElementById('customWorldInput').style.display = 'block';
+      document.getElementById('customWorldInput').focus();
+      document.querySelectorAll('.world-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedWorld = document.getElementById('customWorldInput').value.trim() || 'everyday life at home';
+      return;
+    }
+    document.getElementById('customWorldInput').style.display = 'none';
+    document.querySelectorAll('.world-pill').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedWorld = btn.dataset.world;
+  });
+});
+document.getElementById('customWorldInput').addEventListener('input', e => {
+  selectedWorld = e.target.value.trim() || 'everyday life at home';
+});
+
+// â”€â”€ Revenge sub-panel: show/hide â”€â”€
+document.getElementById('jokeType').addEventListener('change', function() {
+  const panel = document.getElementById('revengePanel');
+  if (this.value === 'MAX_REVENGE_TOBY_IMMUNE') {
+    panel.classList.add('show');
+  } else {
+    panel.classList.remove('show');
+  }
+});
+
+// â”€â”€ Revenge pills logic (single select per group) â”€â”€
+function initPillGroup(groupId, stateCallback) {
+  document.getElementById(groupId).addEventListener('click', e => {
+    const pill = e.target.closest('.revenge-pill');
+    if (!pill) return;
+    document.querySelectorAll(`#${groupId} .revenge-pill`).forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    stateCallback(pill.dataset[groupId === 'trapTypePills' ? 'trap' : groupId === 'escapeReasonPills' ? 'escape' : 'revenge']);
+  });
+}
+
+initPillGroup('trapTypePills', val => { selectedTrap = val; });
+initPillGroup('escapeReasonPills', val => { selectedEscapeReason = val; });
+initPillGroup('revengePlanPills', val => { selectedRevengePlan = val; });
+
+// â”€â”€ Char active toggle â”€â”€
+document.getElementById('charsGrid').addEventListener('change', e => {
+  if (e.target.classList.contains('char-active')) {
+    e.target.closest('.char-card').classList.toggle('inactive', !e.target.checked);
+  }
+});
+
+// â”€â”€ Add character â”€â”€
+document.getElementById('addCharBtn').addEventListener('click', () => {
+  const id = charIdCounter++;
+  const card = document.createElement('div');
+  card.className = 'char-card';
+  card.dataset.id = id;
+  card.innerHTML = `
+    <div class="char-header">
+      <input type="checkbox" class="char-active" checked>
+      <span>ðŸŽ­</span>
+      <input type="text" class="char-name" placeholder="Nombre del personaje" />
+      <button class="del-char-btn" onclick="this.closest('.char-card').remove()" title="Eliminar">âœ–</button>
+    </div>
+    <textarea class="char-prompt" placeholder="Describe al personaje: apariencia, personalidad, frases tÃ­picas..."></textarea>
+  `;
+  document.getElementById('charsGrid').appendChild(card);
+});
+
+// â”€â”€ Generate â”€â”€
+document.getElementById('generateBtn').addEventListener('click', () => generate());
+document.getElementById('variateBtn').addEventListener('click', () => {
+  const idea = document.getElementById('ideaInput').value.trim();
+  generate('Create a fresh variation â€” different situation, same characters. ' + (idea ? 'Original idea hint: ' + idea : 'Surprise me.'));
+});
+
+// ðŸ”¥ LA FUNCIÃ“N DE REINTENTOS MÃGICA QUE TENÃA TU CÃ“DIGO ORIGINAL ðŸ”¥
+async function fetchWithRetry(url, payload, maxRetries = 3) {
+  let retries = 0;
+  // Estos retrasos evitan el error de cuota silenciosamente
+  const delays = [1500, 3000, 6000]; 
+  
+  while (retries <= maxRetries) {
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await response.json();
+      
+      if (!response.ok || data.error) {
+        throw new Error(data.error?.message || 'Error en la API');
+      }
+      return data;
+    } catch (err) {
+      if (retries === maxRetries) throw err; // Si ya reintentÃ³ mucho, ahÃ­ sÃ­ lanza el error
+      console.warn(`LÃ­mite de API alcanzado. Reintentando en ${delays[retries]/1000}s...`);
+      await new Promise(resolve => setTimeout(resolve, delays[retries]));
+      retries++;
+    }
+  }
+}
+
+async function generate(ideaOverride) {
+  const apiKey = document.getElementById('apiKey').value.trim(); 
+  
+  if (!apiKey) {
+    showErr("âŒ Error: Por favor pega tu API Key de Gemini en el recuadro superior.");
+    return;
+  }
+
+  const cards = document.querySelectorAll('.char-card');
+  const characters = [];
+  cards.forEach(card => {
+    if (!card.querySelector('.char-active').checked) return;
+    const name   = card.querySelector('.char-name').value.trim();
+    const prompt = card.querySelector('.char-prompt').value.trim();
+    if (name || prompt) characters.push({ name: name || 'Character', prompt });
+  });
+  if (characters.length === 0) { showErr('âš ï¸ Activa al menos un personaje.'); return; }
+
+  const jokeTypeRaw = document.getElementById('jokeType').value;
+  const isRevengeMode = jokeTypeRaw === 'MAX_REVENGE_TOBY_IMMUNE';
+  const jokeType = isRevengeMode
+    ? `Max sets a trap for Toby, but Toby never falls for it. The trap type is: "${selectedTrap}". Toby avoids it because: "${selectedEscapeReason}". At the end, Max tries to get revenge like this: "${selectedRevengePlan}". The comedy MUST come from Max's frustration escalating and Toby remaining completely oblivious that any of this is happening.`
+    : jokeTypeRaw;
+
+  const length   = document.getElementById('lengthSelect').value;
+  const tone     = document.getElementById('toneSelect').value;
+  const lang     = document.getElementById('langSelect').value;
+  const idea     = ideaOverride || document.getElementById('ideaInput').value.trim();
+  const wantSora = document.getElementById('soraToggle').checked;
+  const world    = selectedWorld;
+
+  clearErr();
+  setLoading(true, 'âœï¸ Escribiendo el guion... (Si demora, estÃ¡ esquivando el lÃ­mite de Google)');
+
+  const charBlock = characters.map((c, i) =>
+    `CHARACTER ${i+1} â€” ${c.name}:\n${c.prompt}`
+  ).join('\n\n---\n\n');
+
+  const nextNum = episodeCount + 1;
+
+  // â”€â”€ REVENGE MODE RULES injected into system â”€â”€
+  const revengeRules = isRevengeMode ? `
+
+SPECIAL RULES FOR THIS EPISODE â€” MAX vs TOBY TRAP MODE:
+- Max is the one who sets the trap. He is fully convinced his plan is PERFECT and foolproof.
+- Toby NEVER falls into the trap. Toby must avoid it for the EXACT reason specified: ${selectedEscapeReason}
+- Toby must remain 100% oblivious that there was ever a trap. He never mentions it. He never reacts to it.
+- The humor comes entirely from MAX'S ESCALATING FRUSTRATION, not from Toby doing anything clever.
+- Toby should accidentally do something completely random and innocent that bypasses the trap.
+- Other characters can react with confusion or add chaos, but Max is the main victim.
+- The ending MUST follow this revenge/reaction arc: ${selectedRevengePlan}
+- DO NOT let Toby discover the trap or comment on it. Ever. That ruins the joke.
+- Max's defeat must feel TOTAL, HUMILIATING, and EARNED by his own overconfidence.
+- Toby's catchphrase "Hee hee!" can appear but ONLY in an unrelated context â€” never as a reaction to the trap.` : '';
+
+  const system = `You are a professional comedy writer for a viral cartoon shorts series, in the style of Looney Tunes and modern animated TikTok shorts.
+
+Your mission:
+- Respect EVERY character's personality 100% â€” never break character
+- Write humor that flows from WHO they are, not generic jokes
+- Dialogue must be SHORT, punchy, and visual â€” like a real cartoon
+- Action notes must be animatable in 2D
+- The punchline/twist must be surprising and land perfectly
+${revengeRules}
+
+ABSOLUTE RULES:
+1. Never break a character's established personality
+2. Every scene must have a clear visual gag
+3. Dialogue lines: maximum 8 words each (cartoon style)
+4. Always end with a strong unexpected punchline
+5. The comedy must work for an international audience
+6. SIEMPRE poner el texto 100% tal cual, sin inventar nada extra ni acortar los capÃ­tulos.
+7. OBLIGATORIO: Finaliza EXACTAMENTE y SIEMPRE con la frase en mayÃºsculas: "FINAL DEL CAPÃTULO #${nextNum}"`;
+
+  const soraBlock = wantSora ? `
+
+SORA ANIMATION PROMPT (Anti-Clone Rule):
+[Write an ULTRA-MINIMALIST animation prompt in English. 
+RULE: Do NOT describe art style, hair, face, or body details. 
+Start with: "Hand-drawn cartoon animation, illustrated characters, NOT real humans."
+Then describe ONLY the movement, referring to characters by their clothing color only.
+End with: "Hand-drawn cartoon animation, illustrated characters, NOT real humans."
+Example: "Hand-drawn cartoon animation, illustrated characters, NOT real humans. The boy in the red shirt jumps angrily. The boy in the yellow shirt laughs and runs away. Static camera, exaggerated cartoon motion. Hand-drawn cartoon animation, illustrated characters, NOT real humans."
+Now write the prompt for THIS episode's action.]` : '';
+
+  const userMsg = `Write a complete cartoon short with these specs:
+
+ACTIVE CHARACTERS:
+${charBlock}
+
+SETTINGS:
+- World/Universe: ${world}
+- Joke type / plot: ${jokeType}
+- Duration: ${length}
+- Tone: ${tone}
+- Language: ${lang}
+${idea ? `- Specific idea: "${idea}"` : '- Invent a surprising original situation'}
+
+STRICT FORMAT:
+
+TITLE: [funny title in caps, max 6 words]
+WORLD: ${world}
+
+SOCIAL CAPTION: [1-2 punchy lines for TikTok/Instagram caption with emojis]
+HASHTAGS: [#tag1 #tag2 #cartoon #funny #animation ...]
+${soraBlock}
+
+IMAGE PROMPT (for Midjourney / DALL-E / Firefly):
+[Write a detailed image generation prompt in English for the KEY scene of this episode.
+Start AND end with: "Hand-drawn cartoon animation, illustrated characters, NOT real humans."
+Include: setting/background, which characters appear, what they are doing, their expressions, art style.
+Art style note to always include: "Hand-drawn cartoon illustration, black marker outlines, colored pencil coloring, wooden board background, big cartoon heads, simple proportions, comic sketch style."
+Keep it under 120 words.]
+
+SYNOPSIS: [1 line]
+
+---
+
+SCENE 1 â€” [SCENE NAME]
+[Brief visual description of the location]
+
+CHARACTER: short line
+[action note]
+CHARACTER: short line
+
+...(complete all scenes)...
+
+---
+FINAL DEL CAPÃTULO #${nextNum}`;
+
+  try {
+    // Restaurado exactamente al modelo de tu cÃ³digo funcional
+    const urlText = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`;
+    
+    const payloadText = {
+      contents: [{ parts: [{ text: userMsg }] }],
+      systemInstruction: { parts: [{ text: system }] },
+      generationConfig: { maxOutputTokens: 3500, temperature: 0.75 }
+    };
+
+    // Usando tu funciÃ³n de reintentos silenciosos que esquiva la Cuota
+    let textResponseData = await fetchWithRetry(urlText, payloadText);
+    
+    const text = textResponseData.candidates?.[0]?.content?.parts?.[0]?.text;
+    
+    if (!text) {
+      throw new Error("Respuesta vacÃ­a o invÃ¡lida al generar el guion.");
+    }
+
+    lastEpisodeText = text;
+    episodeCount++;
+    displayEpisode(text, episodeCount, world, wantSora, isRevengeMode);
+
+  } catch(e) {
+    showErr('âŒ Error de conexiÃ³n/LÃ­mite de Google: ' + e.message);
+  } finally {
+    setLoading(false);
+  }
+}
+
+function displayEpisode(text, num, world, hasSora, isRevenge) {
+  const titleM = text.match(/TITLE:\s*(.+)/i);
+  const title = titleM ? titleM[1].trim() : `Chapter ${num}`;
+
+  document.getElementById('epNum').textContent = `CHAPTER #${num}`;
+  document.getElementById('epTitle').textContent = title;
+  document.getElementById('epWorld').textContent = (isRevenge ? 'ðŸ˜¤ TRAP MODE â€” ' : 'ðŸŒ ') + world.toUpperCase();
+
+  let soraHtml = '';
+  let cleanText = text;
+  const soraM = text.match(/SORA ANIMATION PROMPT[^:]*:\s*([\s\S]*?)(?=IMAGE PROMPT|SYNOPSIS:|---)/i);
+  if (hasSora && soraM) {
+    const soraPrompt = soraM[1].trim();
+    soraHtml = `
+      <div class="sora-result-box">
+        <h3>ðŸŽ¬ PROMPT ANTI-CLONES â€” SORA / RUNWAY / KLING</h3>
+        <p style="font-size:0.82rem; color:#166534; margin-bottom:8px;">Sube tu imagen y pega este prompt para animar sin duplicar personajes:</p>
+        <div class="prompt-text" id="soraPromptText">${soraPrompt}</div>
+        <button class="copy-btn green" id="copySoraBtn">ðŸ“‹ COPIAR PROMPT SORA</button>
+      </div>`;
+    cleanText = cleanText.replace(soraM[0], '');
+  }
+
+  let imgHtml = '';
+  const imgM = cleanText.match(/IMAGE PROMPT[^:]*:\s*([\s\S]*?)(?=SYNOPSIS:|---)/i);
+  if (imgM) {
+    const imgPrompt = imgM[1].trim();
+    imgHtml = `
+      <div class="img-prompt-box">
+        <h3>ðŸŽ¨ PROMPT DE IMAGEN â€” Midjourney / DALL-E / Firefly</h3>
+        <p>Pega este prompt en tu generador de imÃ¡genes para crear el frame base de la escena:</p>
+        <div class="img-prompt-text" id="imgPromptText">${imgPrompt}</div>
+        <button class="copy-btn orange" id="copyImgBtn">ðŸ“‹ COPIAR PROMPT DE IMAGEN</button>
+      </div>`;
+    cleanText = cleanText.replace(imgM[0], '');
+  }
+
+  let metaHtml = '';
+  const captionM = cleanText.match(/SOCIAL CAPTION:\s*([^\n]+)/i);
+  const hashM    = cleanText.match(/HASHTAGS:\s*([^\n]+)/i);
+  if (captionM || hashM) {
+    metaHtml = `<div class="meta-box">`;
+    if (captionM) metaHtml += `<strong>ðŸ“± Caption:</strong> ${captionM[1].trim()}<br><br>`;
+    if (hashM)    metaHtml += `<strong>#ï¸âƒ£ Tags:</strong> ${hashM[1].trim()}`;
+    metaHtml += `</div>`;
+    cleanText = cleanText
+      .replace(/SOCIAL CAPTION:[^\n]+\n?/i, '')
+      .replace(/HASHTAGS:[^\n]+\n?/i, '');
+  }
+
+  cleanText = cleanText.replace(/SYNOPSIS:\s*([^\n]*)/i, '<strong>ðŸ“ Synopsis:</strong> $1\n\n');
+
+  let scriptHtml = cleanText
+    .replace(/^(SCENE \d+[^\n]*)/gm, '<span class="scene-header">$1</span>')
+    .replace(/\n/g, '<br>');
+
+  document.getElementById('epBody').innerHTML = metaHtml + soraHtml + imgHtml +
+    `<div class="episode-text">${scriptHtml}</div>`;
+
+  const copySoraBtn = document.getElementById('copySoraBtn');
+  if (copySoraBtn) {
+    copySoraBtn.addEventListener('click', () => {
+      copyToClipboard(document.getElementById('soraPromptText').innerText, copySoraBtn, 'âœ… COPIADO', 'ðŸ“‹ COPIAR PROMPT SORA');
+    });
+  }
+
+  const copyImgBtn = document.getElementById('copyImgBtn');
+  if (copyImgBtn) {
+    copyImgBtn.addEventListener('click', () => {
+      copyToClipboard(document.getElementById('imgPromptText').innerText, copyImgBtn, 'âœ… COPIADO', 'ðŸ“‹ COPIAR PROMPT DE IMAGEN');
+    });
+  }
+
+  const out = document.getElementById('episodeOutput');
+  out.classList.add('show');
+  out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.getElementById('copyBtn').addEventListener('click', () => {
+  copyToClipboard(document.getElementById('epBody').innerText, document.getElementById('copyBtn'), 'âœ… COPIED', 'ðŸ“‹ COPY');
+});
+
+function setLoading(s, msg) {
+  document.getElementById('loading').classList.toggle('show', s);
+  document.getElementById('generateBtn').disabled = s;
+  document.getElementById('generateBtn').textContent = s ? 'â³ ESPERA...' : 'ðŸŽ¬ Â¡GENERAR EPISODIO!';
+  if (msg) document.getElementById('loadingText').textContent = msg;
+}
+function showErr(m) { const b = document.getElementById('errorBox'); b.textContent = m; b.classList.add('show'); }
+function clearErr() { document.getElementById('errorBox').classList.remove('show'); }
+</script>
+</body>
+</html>
+
+
